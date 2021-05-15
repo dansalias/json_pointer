@@ -31,6 +31,7 @@ const expectedGets: [string, any][] = [
   ["/ ",           7],
   ["/m~0n",        8],
   ["/o/p~1q/r~0s", "t"],
+  ["/nowhere",     undefined],
 ]
 
 const expectedSets = expectedGets.slice(1)

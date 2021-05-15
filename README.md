@@ -13,6 +13,7 @@ const obj = {
 // jp.get(obj: object, pointer: string): any
 jp.get(obj, '/foo/0')           // 'bar'
 jp.get(obj, '/qux/quux')        // 'quuz'
+jp.get(obj, '/hello')           // undefined
 
 // jp.set(obj: object, pointer: string, value: any): void
 jp.set(obj, '/foo/1', 'becue')  // obj.foo === ['bar', 'becue']
