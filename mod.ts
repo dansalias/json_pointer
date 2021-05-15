@@ -10,6 +10,7 @@ function getPath(pointer: string): string[] {
 }
 
 function deepApply(data: Data, path: string[], value: any): void {
+  if (data[path[0]] === undefined) data[path[0]] = {}
   if (path.length === 1) {
     data[path[0]] = value
     return
@@ -31,7 +32,7 @@ export function get(
   let value = data
   if (pointer === '') return data
   for (const path of getPath(pointer)) {
-    value = value[path]
+    if (value !== undefined) value = value[path]
   }
   return value
 }
