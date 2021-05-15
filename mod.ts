@@ -5,6 +5,7 @@ function escape(path: string): string {
 }
 
 function getPath(pointer: string): string[] {
+  if (!pointer.startsWith('/')) throw new Error (`Invalid pointer "${pointer}"`)
   return pointer.substring(1).split('/').map(escape)
 }
 
@@ -29,7 +30,6 @@ export function get(
 ): any {
   let value = data
   if (pointer === '') return data
-  if (!pointer.startsWith('/')) throw new Error (`Invalid pointer "${pointer}"`)
   for (const path of getPath(pointer)) {
     value = value[path]
   }
