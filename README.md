@@ -3,7 +3,7 @@ Complete implementation of __JSON Pointer__ for __Deno__, as per IETF
 
 ## Usage
 ```ts
-import * as jp from 'https://deno.land/x/json_pointer'
+import * as jp from 'https://deno.land/x/json_pointer/mod.ts'
 
 const obj = {
   'foo': ['bar', 'baz'],
