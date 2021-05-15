@@ -1,3 +1,5 @@
+[![test](https://github.com/dansalias/json_pointer/actions/workflows/test.yml/badge.svg)](https://github.com/dansalias/json_pointer/actions/workflows/test.yml)
+
 Complete implementation of __JSON Pointer__ for __Deno__, as per IETF
 [RFC6901](https://datatracker.ietf.org/doc/html/rfc6901)
 
