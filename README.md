@@ -19,6 +19,7 @@ jp.get(obj, '/hello')           // undefined
 
 // jp.set(obj: object, pointer: string, value: any): void
 jp.set(obj, '/foo/1', 'becue')  // obj.foo === ['bar', 'becue']
+jp.set(obj, '/foo/-', 'bax')    // obj.foo === ['bar', 'becue', 'bax']
 jp.set(obj, '/new/path', 'val') // obj.new === { path: 'val' }
 ```
 

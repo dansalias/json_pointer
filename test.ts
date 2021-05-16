@@ -1,5 +1,19 @@
-import { assertEquals } from 'https://deno.land/std@0.96.0/testing/asserts.ts'
+import {
+  assertEquals,
+} from 'https://deno.land/std@0.96.0/testing/asserts.ts'
 import * as jsonPointer from './mod.ts'
+
+function createClone(object: object): object {
+  return JSON.parse(JSON.stringify(object))
+}
+
+function assertDeepEquals<T extends any>(actual: T, expected: T): void {
+  assertEquals(
+    JSON.stringify(actual),
+    JSON.stringify(expected)
+  )
+  return
+}
 
 const object = {
   "foo": ["bar", "baz"],
@@ -14,6 +28,7 @@ const object = {
   " ": 7,
   "m~n": 8,
   "o": {"p/q":{"r~s":"t"}},
+  "u": ["v", {"w":["x","y"]}],
 }
 
 const expectedGets: [string, any][] = [
@@ -31,6 +46,7 @@ const expectedGets: [string, any][] = [
   ["/ ",           7],
   ["/m~0n",        8],
   ["/o/p~1q/r~0s", "t"],
+  ["/u/1/w/1",     "y"],
   ["/nowhere",     undefined],
   ["/new/path",    undefined],
 ]
@@ -47,12 +63,30 @@ for (const [pointer, expected] of expectedGets) {
 }
 
 for (const [pointer, expected] of expectedSets) {
-  const clone = { ...object }
+  const clone = createClone(object)
   Deno.test(`set "${pointer}"`, () => {
-    jsonPointer.set(clone, pointer, 'new'),
+    jsonPointer.set(clone, pointer, 'new')
     assertEquals(
       jsonPointer.get(clone, pointer),
       'new'
     )
   })
 }
+
+Deno.test(`set "/foo/-"`, () => {
+  const clone = createClone(object)
+  jsonPointer.set(clone, '/foo/-', 'bax')
+  assertDeepEquals(
+    jsonPointer.get(clone, '/foo'),
+    ['bar', 'baz', 'bax']
+  )
+})
+
+Deno.test(`set "/u/1/w/-"`, () => {
+  const clone = createClone(object)
+  jsonPointer.set(clone, '/u/1/w/-', 'z')
+  assertDeepEquals(
+    jsonPointer.get(clone, '/u/1/w'),
+    ['x', 'y', 'z']
+  )
+})

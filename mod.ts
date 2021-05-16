@@ -10,6 +10,7 @@ function getPath(pointer: string): string[] {
 }
 
 function deepApply(data: Data, path: string[], value: any): void {
+  if (path[0] === '-' && Array.isArray(data)) data.push(value)
   if (data[path[0]] === undefined) data[path[0]] = {}
   if (path.length === 1) {
     data[path[0]] = value
